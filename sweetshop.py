@@ -1,0 +1,16 @@
+class SweetShop:
+    def __init__(self):
+        self.inventory = []
+
+    def add_sweet(self, sweet_id, name, category, price, quantity):
+        sweet = {
+            'id': sweet_id,
+            'name': name,
+            'category': category,
+            'price': price,
+            'quantity': quantity
+        }
+        self.inventory.append(sweet)
+
+    def delete_sweet(self, sweet_id):
+        self.inventory = [s for s in self.inventory if s['id'] != sweet_id]

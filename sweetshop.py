@@ -14,3 +14,6 @@ class SweetShop:
 
     def delete_sweet(self, sweet_id):
         self.inventory = [s for s in self.inventory if s['id'] != sweet_id]
+
+    def view_sweets(self):
+        return self.inventory

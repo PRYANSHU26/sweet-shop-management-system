@@ -2,7 +2,6 @@ import unittest
 import sys
 import os
 
-# Add path to sweetshop.py
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from sweetshop import SweetShop
 
@@ -73,6 +72,25 @@ class TestSweetShop(unittest.TestCase):
         sorted_sweets = shop.sort_sweets(by="price", descending=True)
         self.assertEqual(sorted_sweets[0]['price'], 50)
         self.assertEqual(sorted_sweets[2]['price'], 10)
+
+    def test_purchase_sweet(self):
+        shop = SweetShop()
+        shop.add_sweet(1001, "Kaju Katli", "Nut-Based", 50, 10)
+        shop.purchase_sweet(1001, 5)
+        self.assertEqual(shop.inventory[0]['quantity'], 5)
+
+    def test_purchase_insufficient_stock(self):
+        shop = SweetShop()
+        shop.add_sweet(1001, "Kaju Katli", "Nut-Based", 50, 3)
+        with self.assertRaises(ValueError) as context:
+            shop.purchase_sweet(1001, 5)
+        self.assertIn("Not enough stock", str(context.exception))
+
+    def test_restock_sweet(self):
+        shop = SweetShop()
+        shop.add_sweet(1001, "Kaju Katli", "Nut-Based", 50, 5)
+        shop.restock_sweet(1001, 10)
+        self.assertEqual(shop.inventory[0]['quantity'], 15)
 
 if __name__ == '__main__':
     unittest.main()

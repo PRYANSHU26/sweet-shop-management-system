@@ -32,3 +32,19 @@ class SweetShop:
         if by not in ["name", "price"]:
             raise ValueError("Can only sort by 'name' or 'price'")
         return sorted(self.inventory, key=lambda x: x[by], reverse=descending)
+
+    def purchase_sweet(self, sweet_id, quantity):
+        for sweet in self.inventory:
+            if sweet['id'] == sweet_id:
+                if sweet['quantity'] < quantity:
+                    raise ValueError("Not enough stock to complete the purchase.")
+                sweet['quantity'] -= quantity
+                return
+        raise ValueError("Sweet not found.")
+
+    def restock_sweet(self, sweet_id, quantity):
+        for sweet in self.inventory:
+            if sweet['id'] == sweet_id:
+                sweet['quantity'] += quantity
+                return
+        raise ValueError("Sweet not found.")

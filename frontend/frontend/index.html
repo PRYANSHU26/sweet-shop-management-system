@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sweet Shop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #fffbe6;
+    }
+    h1 {
+      text-align: center;
+      color: #cc6600;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background-color: #ffe0b3;
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px;
+    }
+    #form-section {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sweet Shop Management</h1>
+
+  <h2>Available Sweets</h2>
+  <table id="sweet-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <!-- Sweet rows go here -->
+    </tbody>
+  </table>
+
+  <div id="form-section">
+    <h2>Add a New Sweet</h2>
+    <input type="text" id="id" placeholder="ID">
+    <input type="text" id="name" placeholder="Name">
+    <input type="text" id="category" placeholder="Category">
+    <input type="number" id="price" placeholder="Price">
+    <input type="number" id="quantity" placeholder="Quantity">
+    <button onclick="addSweet()">Add Sweet</button>
+  </div>
+
+  <script>
+    const sweets = [
+      { id: 1001, name: "Kaju Katli", category: "Nut-Based", price: 50, quantity: 20 },
+      { id: 1002, name: "Gajar Halwa", category: "Vegetable-Based", price: 30, quantity: 15 },
+      { id: 1003, name: "Gulab Jamun", category: "Milk-Based", price: 10, quantity: 50 },
+    ];
+
+    function renderTable() {
+      const tableBody = document.getElementById("table-body");
+      tableBody.innerHTML = "";
+      sweets.forEach(sweet => {
+        const row = `<tr>
+          <td>${sweet.id}</td>
+          <td>${sweet.name}</td>
+          <td>${sweet.category}</td>
+          <td>₹${sweet.price}</td>
+          <td>${sweet.quantity}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    function addSweet() {
+      const id = document.getElementById("id").value;
+      const name = document.getElementById("name").value;
+      const category = document.getElementById("category").value;
+      const price = parseFloat(document.getElementById("price").value);
+      const quantity = parseInt(document.getElementById("quantity").value);
+
+      if (!id || !name || !category || isNaN(price) || isNaN(quantity)) {
+        alert("Please fill in all fields correctly.");
+        return;
+      }
+
+      sweets.push({ id, name, category, price, quantity });
+      renderTable();
+
+      // Clear form
+      document.getElementById("id").value = "";
+      document.getElementById("name").value = "";
+      document.getElementById("category").value = "";
+      document.getElementById("price").value = "";
+      document.getElementById("quantity").value = "";
+    }
+
+    renderTable();
+  </script>
+</body>
+</html>
